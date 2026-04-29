@@ -22,4 +22,4 @@
 :HL["https://ui-avatars.com/api/?name=Anusuya&background=0055d4&color=fff&size=400&bold=true&font-size=0.4","image"]
 :HL["https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=900&h=500&fit=crop","image"]
 :HL["https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=900&h=500&fit=crop","image"]
-0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"about","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"V3HQ1qhH977eyYfpZo2ro"}
+0:{"tree":{"name":"","param":null,"prefetchHints":16,"slots":{"children":{"name":"about","param":null,"prefetchHints":0,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":0,"slots":null}}}}},"staleTime":300,"buildId":"wi61i17Y4ku13HnDl0UA7"}
