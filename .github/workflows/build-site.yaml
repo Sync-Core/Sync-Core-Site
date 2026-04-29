@@ -1,0 +1,57 @@
+name: Build and Sync Core Site
+
+on:
+  push:
+    branches:
+      - main  # Trigger on pushes to the main branch
+
+jobs:
+  build_and_sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source repository
+        uses: actions/checkout@v4
+        with:
+          repository: Sync-Core/SyncCore
+          path: source
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+
+      - name: Checkout target repository
+        uses: actions/checkout@v4
+        with:
+          repository: Sync-Core/Sync-Core-Site
+          path: target
+          token: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          ref: main
+
+      - name: Set Git user
+        run: |
+          git config --global user.email "siva@mindwaveventures.com"
+          git config --global user.name "Sivamani-18"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd source
+          npm ci
+
+      - name: Build project
+        run: |
+          cd source
+          npm run build
+
+      - name: Sync build to target repository
+        run: |
+          find target -maxdepth 1 -mindepth 1 ! -name '.git' ! -name '.github' ! -name 'site' -exec rm -rf {} +
+          rsync -av --delete --exclude='.git' source/out/ target/site/
+          cd target
+          git remote set-url origin https://x-access-token:${{ secrets.ACTIONS_DEPLOY_KEY }}@github.com/Sync-Core/Sync-Core-Site.git
+          git add .
+          git diff --staged --quiet || git commit -m "Synced Build: $(date)"
+          git push origin main
